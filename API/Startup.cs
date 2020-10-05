@@ -32,6 +32,9 @@ namespace API
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddControllers();
+
+            // 크로스오리진 CORS 추가 해 줌으로서, 다른 호스트에서도 요청 받을 수 있게 함!
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +50,9 @@ namespace API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            //마찬가지로 CORS 사용 할 거라고 추가해줌.
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseEndpoints(endpoints =>
             {
